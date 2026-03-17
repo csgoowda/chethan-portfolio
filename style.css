@@ -1,0 +1,1240 @@
+:root {
+    /* Color Palette */
+    --c-void: #000000;
+    --c-void-deep: #030305;
+    --c-light: #E0E0E0;
+    --c-white: #FFFFFF;
+    --c-cyan: #00F3FF;
+    --c-magenta: #FF003C;
+    
+    /* Typography */
+    --f-display: 'Space Grotesk', sans-serif;
+    --f-body: 'Inter', sans-serif;
+    
+    /* Materials */
+    --obsidian: rgba(3, 3, 5, 0.4);
+    --blur-heavy: blur(24px);
+    
+    /* Dynamics (Updated strictly via JS) */
+    --scroll-skew: 0deg;
+    --scroll-scale: 1;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    background-color: var(--c-void);
+    color: var(--c-light);
+    font-family: var(--f-body);
+    overflow-x: hidden;
+    /* Custom Scrollbar */
+    scrollbar-width: none; /* Firefox */
+}
+::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+/* ==========================================================================
+   Typography & Utilities
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+}
+
+.section {
+    position: relative;
+    width: 100vw;
+    min-height: 100vh;
+    padding: 10vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Smooth Scroll Wrapper */
+#smooth-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Scroll Velocity Distortion Applied globally to content */
+.smooth-content {
+    transform-origin: center center;
+    transform: skewY(var(--scroll-skew)) scaleY(var(--scroll-scale));
+    will-change: transform;
+}
+
+/* ==========================================================================
+   Cursor (Magnetic Spatial)
+   ========================================================================== */
+.cursor-dot,
+.cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--c-cyan);
+    box-shadow: 0 0 10px 2px var(--c-cyan), 0 0 20px 5px rgba(0, 243, 255, 0.4);
+    mix-blend-mode: screen;
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+    pointer-events: none;
+}
+
+.cursor-ring {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0, 243, 255, 0.5);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3), inset 0 0 10px rgba(0, 243, 255, 0.1);
+    transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1), height 0.3s cubic-bezier(0.19, 1, 0.22, 1), background 0.3s, border-color 0.3s;
+    mix-blend-mode: screen;
+    pointer-events: none;
+}
+
+/* Hover States for Cursor */
+.cursor-dot.hover-magnetic {
+    width: 0px;
+    height: 0px;
+    box-shadow: none;
+}
+.cursor-ring.hover-magnetic {
+    width: var(--hover-width, 100px);
+    height: var(--hover-height, 40px);
+    background: rgba(0, 243, 255, 0.1);
+    border-color: var(--c-cyan);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.5), inset 0 0 20px rgba(0, 243, 255, 0.2);
+    border-radius: var(--hover-radius, 8px);
+    mix-blend-mode: screen;
+}
+
+/* ==========================================================================
+   HUD Navigation
+   ========================================================================== */
+.hud {
+    position: fixed;
+    top: 50%;
+    right: 2vw;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    z-index: 100;
+}
+
+.hud-indicator {
+    position: absolute;
+    right: -10px;
+    top: 0;
+    width: 2px;
+    height: 24px;
+    background: var(--c-cyan);
+    box-shadow: 0 0 10px var(--c-cyan);
+    transition: transform 0.3s ease;
+}
+
+.hud-link {
+    color: var(--c-light);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    position: relative;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+}
+
+.hud-link svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.hud-text {
+    font-family: var(--f-display);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+}
+
+.hud-link:hover {
+    opacity: 1;
+}
+
+.hud-link:hover .hud-text {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.hud-link.active {
+    opacity: 1;
+    color: var(--c-cyan);
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+}
+
+.hud-link.active svg {
+    filter: drop-shadow(0 0 5px var(--c-cyan));
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+.hero {
+    align-items: center;
+    overflow: hidden;
+}
+
+#fluid-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.hero-mask-container {
+    position: relative;
+    z-index: 10;
+    mix-blend-mode: normal; /* The actual masking is easier with CSS background-clip if using a static image, but for canvas beneath, we use a trick. */
+    /* To reveal canvas ONLY inside text: 
+       We make the container background black, text transparent, and use mix-blend-mode: multiply. 
+       Since canvas is behind it, white text = shows canvas, black background = hides canvas. 
+       Wait, canvas is behind. If container is black and text is white, multiply mode makes black stay black, white becomes transparent to what's behind it.
+       Wait, no. multiply(white, canvas) = canvas. multiply(black, canvas) = black.
+       Perfect!
+    */
+    background-color: var(--c-void);
+    color: var(--c-white);
+    mix-blend-mode: multiply;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.masked-text {
+    font-size: 15vw;
+    line-height: 0.85;
+    text-align: center;
+    color: var(--c-white);
+    -webkit-text-stroke: 2px var(--c-white);
+}
+
+/* Wait, the prompt says "outline-only typography that fills the screen. The text acts as a mask".
+   If it's outline only, the fill is transparent, outline is white. 
+   Then multiply mode: transparent will NOT show canvas.
+   Let's just make the text fill transparent and outline white, but the prompt says 
+   "text acts as mask - fluid background is only fully visible inside letters".
+   So text fill should be white (which reveals canvas), outline can be white or cyan.
+*/
+.hero-mask-container .masked-text {
+    color: var(--c-white); 
+    -webkit-text-stroke: 0;
+}
+
+.hero-subtext {
+    position: absolute;
+    bottom: 5vw;
+    left: 10vw;
+    font-size: 1.5rem;
+    z-index: 20;
+    max-width: 400px;
+    letter-spacing: 1px;
+    text-transform: none; /* Changed from uppercase to none for a more readable, professional subtitle */
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   Hero Intro Animations
+   ========================================================================== */
+.animate-up {
+    animation: slideUpFade 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.animate-up-delay {
+    animation: slideUpFade 1.5s cubic-bezier(0.19, 1, 0.22, 1) 0.3s forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.animate-fade {
+    animation: simpleFade 2s ease 0.5s forwards;
+    opacity: 0;
+}
+
+@keyframes slideUpFade {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes simpleFade {
+    to {
+        opacity: 1;
+    }
+}
+
+.hero-avatar {
+    position: absolute;
+    bottom: 5vw;
+    right: 15vw;
+    width: 150px;
+    height: 150px;
+    z-index: 20;
+    perspective: 1000px;
+}
+
+.avatar-glitch {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    border-radius: 50%;
+    /* Create a glowing container effect */
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.4), inset 0 0 15px rgba(255, 0, 60, 0.3);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.4s;
+    background: var(--obsidian);
+}
+
+.profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    /* Set opacity slightly down to preserve cyberpunk feel until hover */
+    opacity: 0.9;
+    border: 2px solid rgba(0, 243, 255, 0.5);
+    transition: opacity 0.4s, border-color 0.4s;
+}
+
+.hero-avatar:hover .avatar-glitch { 
+    transform: translateZ(20px) scale(1.05); 
+    box-shadow: 0 0 30px rgba(0, 243, 255, 0.6), inset 0 0 20px rgba(255, 0, 60, 0.5);
+}
+
+.hero-avatar:hover .profile-photo {
+    opacity: 1;
+    border-color: var(--c-cyan);
+}
+
+
+/* ==========================================================================
+   About Section
+   ========================================================================== */
+.about {
+    perspective: 1000px;
+}
+
+.parallax-chambers {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-style: preserve-3d;
+}
+
+.chamber {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    will-change: transform;
+}
+
+.chamber.layer-3 {
+    transform: translateZ(-200px);
+    opacity: 0.2;
+}
+
+.chamber.layer-2 {
+    transform: translateZ(-100px);
+    filter: blur(4px);
+}
+
+.chamber.layer-1 {
+    transform: translateZ(0);
+}
+
+.wireframe {
+    width: 60vw;
+    height: 40vh;
+    margin: 0 auto;
+    border: 1px dashed var(--c-cyan);
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 20px,
+      rgba(0, 243, 255, 0.1) 20px,
+      rgba(0, 243, 255, 0.1) 21px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 20px,
+      rgba(0, 243, 255, 0.1) 20px,
+      rgba(0, 243, 255, 0.1) 21px
+    );
+}
+
+.solid-text {
+    font-size: 8vw;
+    color: var(--c-white);
+    mix-blend-mode: difference;
+}
+
+.ghost-text {
+    font-size: 15vw;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+    white-space: nowrap;
+    opacity: 0.8;
+}
+
+.ghost-text-sub {
+    font-size: 3vw;
+    color: transparent;
+    text-transform: none;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+    max-width: 800px;
+    margin: 0 auto;
+    letter-spacing: 2px;
+}
+
+/* Chromatic Aberration on Hover */
+.solid-text:hover {
+    text-shadow: 3px 0px 0px var(--c-cyan), -3px 0px 0px var(--c-magenta);
+}
+
+/* ==========================================================================
+   Skills Section
+   ========================================================================== */
+.skills {
+    padding: 0;
+}
+
+.physics-bounds {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.skills-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.skills-overlay h2 {
+    font-size: 4vw;
+    opacity: 0.2;
+}
+
+.skill-orb {
+    position: absolute;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--c-white);
+    font-family: var(--f-display);
+    font-size: 1.2rem;
+    backdrop-filter: var(--blur-heavy);
+    cursor: pointer;
+    user-select: none;
+    transition: box-shadow 0.3s, border-color 0.3s;
+    /* Transformation handled via JS for physics */
+    will-change: transform;
+    z-index: 10;
+}
+
+.skill-orb:hover {
+    box-shadow: 0 0 30px var(--c-cyan);
+    border-color: var(--c-cyan);
+    text-shadow: 0 0 10px var(--c-cyan);
+    /* Pause JS physics on hover handled externally */
+}
+
+/* ==========================================================================
+   Projects Section
+   ========================================================================== */
+.projects {
+    height: 600vh; /* Scroll-jacking height extended for 6 projects */
+    padding: 0;
+    display: block;
+}
+
+.projects-sticky {
+    position: relative;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.projects-title {
+    position: absolute;
+    top: 10vw;
+    left: 10vw;
+    font-size: 4vw;
+    z-index: 20;
+}
+
+.horizontal-scroll {
+    display: flex;
+    gap: 5vw;
+    padding: 0 10vw;
+    width: max-content;
+    will-change: transform;
+}
+
+.monolith {
+    width: 30vw;
+    min-width: 400px;
+    height: 60vh;
+    background: rgba(10, 10, 15, 0.6);
+    backdrop-filter: var(--blur-heavy);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.4s cubic-bezier(0.19, 1, 0.22, 1), border-color 0.4s;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.monolith:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 243, 255, 0.1), 0 0 20px rgba(255, 0, 60, 0.1);
+    border-color: rgba(0, 243, 255, 0.3);
+}
+
+.monolith-image {
+    position: relative;
+    width: 100%;
+    height: 45%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.8;
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s;
+    z-index: 1;
+}
+
+.ripple-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 45%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.monolith:hover .monolith-image {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.monolith-content {
+    position: relative;
+    z-index: 10;
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.tech-pill {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    background: rgba(0, 243, 255, 0.05); /* Very light cyan */
+    border: 1px solid rgba(0, 243, 255, 0.2);
+    color: var(--c-cyan);
+    font-family: var(--f-display);
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.tech-pill:hover {
+    background: rgba(0, 243, 255, 0.15);
+    border-color: var(--c-cyan);
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+.monolith-content h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.monolith-content p {
+    margin-bottom: 2rem;
+    color: var(--c-light);
+    line-height: 1.6;
+}
+
+.project-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: auto;
+}
+
+.btn-live, .btn-github {
+    flex: 1;
+    text-align: center;
+    padding: 0.8rem 0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: var(--f-body);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 20; /* Ensures it overrides the canvas */
+}
+
+.btn-live {
+    background: rgba(0, 243, 255, 0.1);
+    border: 1px solid var(--c-cyan);
+    color: var(--c-cyan);
+}
+
+.btn-live:hover {
+    background: var(--c-cyan);
+    color: var(--c-black);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.btn-github {
+    background: rgba(255, 0, 60, 0.1);
+    border: 1px solid var(--c-magenta);
+    color: var(--c-magenta);
+}
+
+.btn-github:hover {
+    background: var(--c-magenta);
+    color: var(--c-black);
+    box-shadow: 0 0 15px rgba(255, 0, 60, 0.5);
+    transform: translateY(-2px);
+}
+
+.btn {
+    background: transparent;
+    border: 1px solid var(--c-white);
+    color: var(--c-white);
+    padding: 1rem 2rem;
+    font-family: var(--f-display);
+    font-weight: 700;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--c-white);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: -1;
+}
+
+.btn:hover {
+    color: var(--c-void);
+}
+
+.btn:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Hole Punch Transition */
+.hole-punch-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--c-cyan);
+    z-index: 1000;
+    pointer-events: none;
+    clip-path: circle(0% at 50% 50%);
+    transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.hole-punch-active {
+    clip-path: circle(150% at 50% 50%);
+    pointer-events: auto;
+}
+
+.project-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--c-void-deep);
+    z-index: 1001;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+    transition-delay: 0.8s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.close-project {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: transparent;
+    border: none;
+    color: var(--c-white);
+    font-family: var(--f-display);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   Experience Section
+   ========================================================================== */
+.experience {
+    overflow: hidden;
+}
+
+.marquee-bg {
+    position: absolute;
+    top: 10vw;
+    left: 0;
+    width: 100%;
+    display: flex;
+    white-space: nowrap;
+    font-family: var(--f-display);
+    font-size: 12vw;
+    color: rgba(255, 255, 255, 0.03);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.marquee-text {
+    animation: scroll-marquee 30s linear infinite;
+}
+
+@keyframes scroll-marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+.timeline-container {
+    position: relative;
+    z-index: 10;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10vw 0;
+}
+
+.timeline-line {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    width: 2px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.timeline-progress {
+    width: 100%;
+    height: 0%; /* updated via JS */
+    background: var(--c-magenta);
+    box-shadow: 0 0 10px var(--c-magenta);
+}
+
+.timeline-nodes {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.node {
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+}
+
+.node-dot {
+    width: 12px;
+    height: 12px;
+    background: var(--c-void);
+    border: 2px solid var(--c-white);
+    border-radius: 50%;
+    position: absolute;
+    left: 15px; /* Alignment with line */
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.node-content {
+    margin-left: 60px;
+}
+
+.node h4 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--c-white);
+}
+
+.node p {
+    color: var(--c-light);
+}
+
+/* Spotlight Effect */
+.experience:has(.node:hover) .node:not(:hover) {
+    opacity: 0.1;
+    filter: blur(2px);
+}
+
+.node:hover {
+    opacity: 1;
+}
+
+.node:hover .node-dot {
+    background: var(--c-magenta);
+    border-color: var(--c-magenta);
+    box-shadow: 0 0 15px var(--c-magenta);
+}
+
+/* ==========================================================================
+   Contact Section
+   ========================================================================== */
+.contact {
+    justify-content: center;
+    align-items: center;
+}
+
+.terminal-container {
+    width: 100%;
+    max-width: 600px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(0, 243, 255, 0.3);
+    border-radius: 4px;
+    padding: 2rem;
+    font-family: 'Courier New', Courier, monospace; /* Terminal font */
+    position: relative;
+    z-index: 10;
+    box-shadow: inset 0 0 20px rgba(0, 243, 255, 0.05);
+}
+
+.terminal-header {
+    color: var(--c-cyan);
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+}
+
+.input-group {
+    display: flex;
+    margin-bottom: 1.5rem;
+    align-items: flex-start;
+}
+
+.prompt {
+    color: var(--c-magenta);
+    margin-right: 1rem;
+    white-space: nowrap;
+}
+
+.mech-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--c-cyan);
+    color: var(--c-cyan);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    width: 100%;
+    outline: none;
+    resize: none;
+    padding-bottom: 0.5rem;
+    transition: all 0.3s;
+}
+
+.mech-input:focus {
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 2px solid var(--c-magenta);
+    text-shadow: 0 0 8px var(--c-magenta);
+}
+
+.terminal-action {
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.terminal-submit {
+    background: transparent;
+    border: none;
+    color: var(--c-cyan);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    transition: text-shadow 0.3s;
+}
+
+.terminal-submit:hover {
+    text-shadow: 0 0 10px var(--c-cyan);
+}
+
+.terminal-submit::after {
+    content: '_';
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.footer-massive {
+    position: absolute;
+    bottom: -5vw;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.distort-text {
+    font-size: 20vw;
+    color: rgba(255, 255, 255, 0.02);
+    display: inline-block;
+    transition: transform 0.1s;
+    white-space: nowrap;
+}
+
+/* ==========================================================================
+   Photo Lightbox
+   ========================================================================== */
+.photo-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: var(--blur-heavy);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.photo-lightbox.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.lightbox-img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 16px;
+    box-shadow: 0 0 50px rgba(0, 243, 255, 0.3), 0 0 30px rgba(255, 0, 60, 0.2);
+    transform: scale(0.9);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.photo-lightbox.visible .lightbox-img {
+    transform: scale(1);
+}
+
+.close-lightbox {
+    position: absolute;
+    top: 2rem;
+    right: 3rem;
+    background: transparent;
+    border: none;
+    color: var(--c-white);
+    font-family: var(--f-display);
+    font-size: 1rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    z-index: 10001;
+    mix-blend-mode: difference;
+}
+
+.close-lightbox::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--c-white);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s;
+}
+
+.close-lightbox:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.mobile-nav {
+    display: none;
+}
+
+/* ==========================================================================
+   Responsive adjustments
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* Swap Navigation Systems */
+    .hud {
+        display: none !important;
+    }
+    
+    .mobile-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 70px;
+        background: rgba(10, 10, 15, 0.85);
+        backdrop-filter: var(--blur-heavy);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        z-index: 10000;
+        justify-content: space-around;
+        align-items: center;
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    .mobile-nav-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--c-light);
+        opacity: 0.5;
+        text-decoration: none;
+        transition: opacity 0.3s, color 0.3s;
+        width: 25%;
+        padding-top: 5px;
+    }
+
+    .mobile-nav-link svg {
+        width: 22px;
+        height: 22px;
+        margin-bottom: 4px;
+    }
+
+    .mobile-nav-link span {
+        font-family: var(--f-display);
+        font-size: 0.6rem;
+        letter-spacing: 1px;
+    }
+
+    .mobile-nav-link.active {
+        opacity: 1;
+        color: var(--c-cyan);
+        text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+    }
+    
+    .mobile-nav-link.active svg {
+        filter: drop-shadow(0 0 5px var(--c-cyan));
+    }
+
+    /* Hero Fixes */
+    .hero-avatar {
+        bottom: 25vh;
+        right: 50%;
+        transform: translateX(50%);
+        width: 130px;
+        height: 130px;
+    }
+    
+    .hero-subtext {
+        bottom: 12vh;
+        left: 5%;
+        right: 5%;
+        text-align: center;
+        font-size: 1.1rem;
+        max-width: 90%;
+    }
+
+    .solid-text {
+        font-size: 13vw; 
+    }
+    .ghost-text {
+        font-size: 15vw;
+        top: -60px !important;
+    }
+    .ghost-text-sub {
+        font-size: 4.5vw;
+        letter-spacing: 1px;
+        padding: 0 5vw;
+    }
+
+    /* Projects Mobile Horizontal Swipe Overlay */
+    /* Remove the 600vh height and sticky logic */
+    .projects {
+        height: auto !important;
+        padding: 80px 0;
+    }
+    
+    .projects-sticky {
+        position: relative !important;
+        height: auto !important;
+        overflow: visible;
+        display: block;
+    }
+    
+    .projects-title {
+        position: relative;
+        top: 0;
+        left: 0;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 8vw;
+    }
+    
+    .horizontal-scroll {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: 1.5rem;
+        padding: 0 1rem 2rem 1rem; 
+        width: 100vw;
+        transform: none !important; /* Stops JS translate */
+        will-change: auto;
+    }
+
+    .horizontal-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .monolith {
+        scroll-snap-align: center;
+        min-width: 85vw;
+        width: 85vw;
+        height: auto;
+        min-height: 60vh;
+        margin: 0;
+    }
+    
+    .monolith-content {
+        padding: 1.2rem;
+    }
+    
+    .monolith-content h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .monolith-content p {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .monolith-image {
+        height: 200px;
+        flex-shrink: 0;
+    }
+    
+    /* Contact Terminal Adjustments */
+    .terminal-container {
+        width: 90vw;
+        margin: 0 auto;
+        padding: 1.2rem;
+    }
+    .mech-input {
+        font-size: 16px; /* Prevents auto-zoom on iOS */
+    }
+    
+    .distort-text {
+        font-size: 16vw;
+    }
+    
+    .footer-massive {
+        padding-bottom: 100px; /* Room for bottom nav */
+    }
+}

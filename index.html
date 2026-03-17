@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chethan Gowda | UI/UX & Full Stack Developer</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="loading">
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- Hole Punch Transition Element -->
+    <div class="hole-punch-overlay"></div>
+
+    <!-- Navigation HUD -->
+    <nav class="hud">
+        <div class="hud-indicator"></div>
+        <a href="#hero" class="hud-link active" data-index="0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span class="hud-text">HOME</span>
+        </a>
+        <a href="#about" class="hud-link" data-index="1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span class="hud-text">ABOUT</span>
+        </a>
+        <a href="#skills" class="hud-link" data-index="2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19.69 14a6.9 6.9 0 0 0 .31-2V5l-8-3-3.16 1.18"></path>
+                <path d="M4.73 8.73L4 11v1c0 6 8 9 8 9s8-3 8-9v-1"></path>
+            </svg>
+            <span class="hud-text">LAB</span>
+        </a>
+        <a href="#projects" class="hud-link" data-index="3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span class="hud-text">GRID</span>
+        </a>
+        <a href="#experience" class="hud-link" data-index="4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 11a9 9 0 0 1 9 9"></path>
+                <path d="M4 4a16 16 0 0 1 16 16"></path>
+                <circle cx="5" cy="19" r="1"></circle>
+            </svg>
+            <span class="hud-text">TIMELINE</span>
+        </a>
+        <a href="#contact" class="hud-link" data-index="5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span class="hud-text">CONTACT</span>
+        </a>
+    </nav>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-nav">
+        <a href="#hero" class="mobile-nav-link active" data-index="0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Home</span>
+        </a>
+        <a href="#about" class="mobile-nav-link" data-index="1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span>About</span>
+        </a>
+        <a href="#projects" class="mobile-nav-link" data-index="3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Grid</span>
+        </a>
+        <a href="#contact" class="mobile-nav-link" data-index="5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>Contact</span>
+        </a>
+    </nav>
+
+    <!-- Smooth Scroll Wrapper -->
+    <div id="smooth-wrapper">
+        <div class="smooth-content" id="smooth-content">
+
+            <!-- Hero Section -->
+            <section id="hero" class="section hero">
+                <!-- Particle / Fluid Trail Canvas -->
+                <canvas id="fluid-canvas"></canvas>
+
+                <div class="hero-mask-container">
+                    <h1 class="masked-text animate-up">CHETHAN<br>GOWDA</h1>
+                </div>
+
+                <div class="hero-avatar animate-fade">
+                    <div class="avatar-glitch">
+                        <img src="assets/mee.jpg" alt="Chethan" class="profile-photo">
+                    </div>
+                </div>
+
+                <div class="hero-subtext animate-up-delay">Passionate about building, designing, and learning modern
+                    technologies.</div>
+            </section>
+
+            <!-- About Section (Parallax Chambers) -->
+            <section id="about" class="section about">
+                <div class="parallax-chambers" id="chambers">
+                    <div class="chamber layer-3" data-speed="0.05">
+                        <div class="wireframe"></div>
+                        <h2 class="ghost-text" style="position: absolute; top: -100px;">ABOUT</h2>
+                    </div>
+                    <div class="chamber layer-2" data-speed="0.12">
+                        <p class="about-subtitle ghost-text-sub">Passionate about building, designing, and learning
+                            modern technologies.</p>
+                    </div>
+                    <div class="chamber layer-1" data-speed="0.25">
+                        <h2 class="solid-text">ASPIRING TECH<br>PROFESSIONAL</h2>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills Section (Gravity Constellation) -->
+            <section id="skills" class="section skills">
+                <div class="skills-overlay">
+                    <h2>THE GRAVITY CONSTELLATION</h2>
+                    <p>Swipe through the void</p>
+                </div>
+                <div class="physics-bounds" id="physics-bounds">
+                    <!-- Orbs generated in JS -->
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="section projects">
+                <div class="projects-sticky">
+                    <h2 class="section-title projects-title">SPATIAL PORTALS</h2>
+                    <div class="horizontal-scroll" id="horizontal-scroll">
+
+                        <!-- Monolith 1 -->
+                        <div class="monolith card-magnetic">
+                            <div class="monolith-image monolith-bg-4"></div>
+                            <canvas class="ripple-canvas"></canvas>
+                            <div class="monolith-content">
+                                <h3>Internet Memory</h3>
+                                <div class="tech-stack">
+                                    <span class="tech-pill">React.js</span>
+                                    <span class="tech-pill">Node.js</span>
+                                    <span class="tech-pill">REST API</span>
+                                </div>
+                                <p>A full-stack personal knowledge mapping app featuring a robust backend architecture
+                                    for storing links and nested data.</p>
+                                <div class="project-actions">
+                                    <a href="#" target="_blank" class="btn btn-live">Live Demo</a>
+                                    <a href="https://github.com/csgoowda/edusphere" target="_blank"
+                                        class="btn btn-github">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Monolith 2 -->
+                        <div class="monolith card-magnetic">
+                            <div class="monolith-image monolith-bg-5"></div>
+                            <canvas class="ripple-canvas"></canvas>
+                            <div class="monolith-content">
+                                <h3>EduSphere</h3>
+                                <div class="tech-stack">
+                                    <span class="tech-pill">Next.js</span>
+                                    <span class="tech-pill">Tailwind</span>
+                                    <span class="tech-pill">PostgreSQL</span>
+                                </div>
+                                <p>A modern education portal with strict role-based authentication and secure session
+                                    management architectures.</p>
+                                <div class="project-actions">
+                                    <a href="#" target="_blank" class="btn btn-live">Live Demo</a>
+                                    <a href="https://github.com/csgoowda/edusphere" target="_blank"
+                                        class="btn btn-github">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Monolith 3 -->
+                        <div class="monolith card-magnetic">
+                            <div class="monolith-image monolith-bg-6"></div>
+                            <canvas class="ripple-canvas"></canvas>
+                            <div class="monolith-content">
+                                <h3>Trading Bot Website</h3>
+                                <div class="tech-stack">
+                                    <span class="tech-pill">UI/UX</span>
+                                    <span class="tech-pill">CSS3</span>
+                                    <span class="tech-pill">JavaScript</span>
+                                </div>
+                                <p>A high-conversion landing page focused on product flow mapping and predictive
+                                    analytics data visualization design.</p>
+                                <div class="project-actions">
+                                    <a href="#" target="_blank" class="btn btn-live">Live Demo</a>
+                                    <a href="https://github.com/csgoowda/nextradeai-website" target="_blank"
+                                        class="btn btn-github">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Monolith 4 -->
+                        <div class="monolith card-magnetic">
+                            <div class="monolith-image monolith-bg-1"></div>
+                            <!-- Realtime ripple canvas inside image -->
+                            <canvas class="ripple-canvas"></canvas>
+                            <div class="monolith-content">
+                                <h3>Distributed Blockchain Miner</h3>
+                                <div class="tech-stack">
+                                    <span class="tech-pill">Java</span>
+                                    <span class="tech-pill">Distributed Computing</span>
+                                    <span class="tech-pill">Blockchain</span>
+                                </div>
+                                <p>A Java-based system simulating blockchain mining utilizing complex distributed
+                                    computing architectures.</p>
+                                <div class="project-actions">
+                                    <a href="#" target="_blank" class="btn btn-live">Live Demo</a>
+                                    <a href="https://github.com/csgoowda/Distributed-Blockchain-Miner-Java"
+                                        target="_blank" class="btn btn-github">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Monolith 5 -->
+                        <div class="monolith card-magnetic">
+                            <div class="monolith-image monolith-bg-2"></div>
+                            <canvas class="ripple-canvas"></canvas>
+                            <div class="monolith-content">
+                                <h3>Multithreaded Game Engine</h3>
+                                <div class="tech-stack">
+                                    <span class="tech-pill">Java</span>
+                                    <span class="tech-pill">Multithreading</span>
+                                    <span class="tech-pill">Performance Optimization</span>
+                                </div>
+                                <p>A custom-built game engine optimized for high performance using advanced
+                                    multithreading paradigms in Java.</p>
+                                <div class="project-actions">
+                                    <a href="#" target="_blank" class="btn btn-live">Live Demo</a>
+                                    <a href="https://github.com/csgoowda/MultithreadedGameEngine-Java" target="_blank"
+                                        class="btn btn-github">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Monolith 6 -->
+                        <div class="monolith card-magnetic">
+                            <div class="monolith-image monolith-bg-3"></div>
+                            <canvas class="ripple-canvas"></canvas>
+                            <div class="monolith-content">
+                                <h3>Data Structures Hub</h3>
+                                <div class="tech-stack">
+                                    <span class="tech-pill">Java</span>
+                                    <span class="tech-pill">DSA</span>
+                                    <span class="tech-pill">Algorithms</span>
+                                </div>
+                                <p>A comprehensive collection of optimized data structures and algorithmic
+                                    implementations.</p>
+                                <div class="project-actions">
+                                    <a href="#" target="_blank" class="btn btn-live">Live Demo</a>
+                                    <a href="https://github.com/csgoowda/Data-Structures-Hub" target="_blank"
+                                        class="btn btn-github">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Experience Section -->
+            <section id="experience" class="section experience">
+                <div class="marquee-bg">
+                    <div class="marquee-text">EXPERIENCE • FREELANCE • LEADERSHIP • DESIGN • EXPERIENCE • FREELANCE •
+                        LEADERSHIP • DESIGN •&nbsp;</div>
+                    <div class="marquee-text" aria-hidden="true">EXPERIENCE • FREELANCE • LEADERSHIP • DESIGN •
+                        EXPERIENCE • FREELANCE • LEADERSHIP • DESIGN •&nbsp;</div>
+                </div>
+                <div class="timeline-container">
+                    <div class="timeline-line">
+                        <div class="timeline-progress"></div>
+                    </div>
+                    <div class="timeline-nodes">
+                        <div class="node" data-spotlight>
+                            <div class="node-dot"></div>
+                            <div class="node-content">
+                                <h4>Freelance Web Developer</h4>
+                                <p>Worked on designing and developing responsive websites for clients.<br>Improved UI/UX
+                                    and fixed mobile responsiveness issues.</p>
+                            </div>
+                        </div>
+                        <div class="node" data-spotlight>
+                            <div class="node-dot"></div>
+                            <div class="node-content">
+                                <h4>Process Design Intern</h4>
+                                <p>Assisted in documentation, workflow optimization, and quality checks.<br>Gained
+                                    hands-on experience in industrial processes and teamwork.</p>
+                            </div>
+                        </div>
+                        <div class="node" data-spotlight>
+                            <div class="node-dot"></div>
+                            <div class="node-content">
+                                <h4>Student Leader</h4>
+                                <p>Organized student activities and supported technical and cultural
+                                    events.<br>Collaborated with teams to manage and execute campus initiatives.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="section contact">
+                <div class="terminal-container">
+                    <form id="contact-form" class="terminal-form">
+                        <div class="terminal-header">root@chethan:~/contact# ./initiate_contact.sh</div>
+                        <div id="terminal-body">
+                            <div class="input-group">
+                                <span class="prompt">Name:~$</span>
+                                <input type="text" class="mech-input" id="sender-name" required autocomplete="off">
+                            </div>
+                            <div class="input-group">
+                                <span class="prompt">Email:~$</span>
+                                <input type="email" class="mech-input" id="sender-email" required autocomplete="off">
+                            </div>
+                            <div class="input-group">
+                                <span class="prompt">Message:~$</span>
+                                <textarea class="mech-input" id="sender-message" rows="1" required></textarea>
+                            </div>
+
+                            <div class="terminal-action">
+                                <span class="prompt">></span>
+                                <button type="submit" class="terminal-submit">INITIATE SEQUENCE</button>
+                            </div>
+                        </div>
+                        <div id="terminal-output"
+                            style="display: none; color: var(--c-cyan); font-family: 'Courier New', Courier, monospace; margin-top: 1rem; line-height: 1.6;">
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <footer class="footer-massive">
+                <h1 class="distort-text">LET'S TALK</h1>
+            </footer>
+
+        </div>
+    </div>
+
+    <!-- UI Overlay for Project (Hole Punch Target) -->
+    <div id="project-overlay" class="project-overlay">
+        <button class="close-project"><span>CLOSE</span></button>
+        <div class="project-content-inner">
+            <h2 id="proj-title">Project Title</h2>
+            <p>Decoding the matrix... Full case study loaded sequentially.</p>
+        </div>
+    </div>
+
+    <!-- Photo Lightbox Overlay -->
+    <div id="photo-lightbox" class="photo-lightbox">
+        <button class="close-lightbox"><span>CLOSE</span></button>
+        <img src="assets/mee.jpg" alt="Chethan" class="lightbox-img">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
